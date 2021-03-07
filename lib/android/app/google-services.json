@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "803403788053",
+    "project_id": "pulse-gym-dev",
+    "storage_bucket": "pulse-gym-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803403788053:android:57fbb9c7c467e11ac7431c",
+        "android_client_info": {
+          "package_name": "com.pulse.gym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803403788053-on6a9c701du4l27qeg7t7ucj99bifbul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOkliVCqnSsndxRi32pV0Puo1HqB49DWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803403788053-on6a9c701du4l27qeg7t7ucj99bifbul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
