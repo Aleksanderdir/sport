@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/auth.dart';
+import 'package:pulse_gym/screens/landing.dart';
 
 void main() => runApp(MaxfitApp());
 
@@ -13,7 +12,7 @@ class MaxfitApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: Color.fromRGBO(50, 65, 85, 1),
             textTheme: TextTheme(title: TextStyle(color: Colors.white))),
-        home: AuthorizationPage());
+        home: LandingPage());
   }
 }
 //}
