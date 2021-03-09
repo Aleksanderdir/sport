@@ -1,39 +1,39 @@
-import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:pulse_gym/domain/user.dart' as usr;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pulse_gym/domain/user.dart';
 
 class AuthService {
-  final fb.FirebaseAuth _fAuth = fb.FirebaseAuth.instance;
+  final FirebaseAuth _fAuth = FirebaseAuth.instance;
 
-  Future<usr.User> signInWithEmailEndPassword(
+  Future<User> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      fb.UserCredential result = await _fAuth.signInWithEmailAndPassword(
+     AuthResult result = await _fAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      fb.User user = result.user;
-      return usr.User.fromFirebase(user);
+      FirebaseUser user = result.user;
+      return User.fromFirebase(user);
+    } catch (e) {
+      return null;
+    }
+  }
+  Future<User> registerWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      AuthResult result = await _fAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return User.fromFirebase(user);
     } catch (e) {
       return null;
     }
   }
 
-  Future<usr.User> registerWithEmailEndPassword(
-      String email, String password) async {
-    try {
-      fb.UserCredential result = await _fAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      fb.User user = result.user;
-      return usr.User.fromFirebase(user);
-    } catch (e) {
-      return null;
-    }
-  }
 
   Future logOut() async {
     await _fAuth.signOut();
   }
 
-  Stream<usr.User> get currentUser {
-    return _fAuth.authStateChanges().map(
-        (fb.User user) => user != null ? usr.User.fromFirebase(user) : null);
+  Stream<User> get currentUser {
+    return _fAuth.onAuthStateChanged.map(
+        (FirebaseUser user) => user != null ? User.fromFirebase(user) : null);
   }
 }
