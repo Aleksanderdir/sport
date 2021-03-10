@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class User {
   String id;
 
-  User.fromFirebase(fb.User user) {
-    id = user.uid;
+  User.fromFirebase(FirebaseUser user) {
+    id = user. uid ;
   }
 }

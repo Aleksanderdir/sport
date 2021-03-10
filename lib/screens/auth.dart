@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pulse_gym/domain/user.dart';
+import 'package:pulse_gym/services/auth.dart';
 
 class AuthorizationPage extends StatefulWidget {
   AuthorizationPage({Key key}) : super(key: key);
@@ -15,6 +18,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   String _email;
   String _password;
   bool showLogin = true;
+  AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     Widget _logo() {
@@ -81,7 +86,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
             Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: _input(
-                    Icon(Icons.lock), 'PASSWORD', _emailController, true)),
+                    Icon(Icons.lock), 'PASSWORD', _passwordController, true)),
             SizedBox(
               height: 0,
             ),
@@ -98,11 +103,47 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    void _buttonAction() {
+    void _loginButtonAction() async {
       _email = _emailController.text;
       _password = _passwordController.text;
-      _emailController.clear();
-      _passwordController.clear();
+
+      if (_email.isEmpty || _password.isEmpty) return;
+
+      User user = await _authService.signInWithEmailAndPassword(
+          _email.trim(), _password.trim()); // _emailController.clear();
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can`t signIn you! Please check your email/password! ",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
+    }
+
+    void _registerButtonAction() async {
+      _email = _emailController.text;
+      _password = _passwordController.text;
+      if (_email.isEmpty || _password.isEmpty) return;
+      User user = await _authService.registerWithEmailAndPassword(
+          _email.trim(), _password.trim()); // _emailController.clear();
+
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can  you! Please register email/password! ",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
     }
 
     return SafeArea(
@@ -114,7 +155,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
               (showLogin
                   ? Column(
                       children: <Widget>[
-                        _form('LOGIN', _buttonAction),
+                        _form('LOGIN', _loginButtonAction),
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: GestureDetector(
@@ -131,7 +172,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                     )
                   : Column(
                       children: <Widget>[
-                        _form('REGISTER', _buttonAction),
+                        _form('REGISTER', _registerButtonAction),
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: GestureDetector(

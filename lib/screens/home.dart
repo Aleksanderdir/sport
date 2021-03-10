@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pulse_gym/domain/workout.dart';
+import 'package:pulse_gym/services/auth.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Kay, kay}) : super(key: kay);
@@ -10,8 +11,16 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text('Maxfit'),
+        title: Text('Pulse Gym'),
         leading: Icon(Icons.fitness_center),
+        actions: <Widget>[
+          FlatButton.icon(
+              onPressed: () {
+                AuthService().logOut();
+              },
+              icon: Icon(Icons.supervised_user_circle, color: Colors.white),
+              label: SizedBox.shrink())
+        ],
       ),
       body: WorkoutsLists(),
     ));
