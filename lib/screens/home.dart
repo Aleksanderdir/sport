@@ -15,6 +15,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    var navigationBar = CurvedNavigationBar(
+      items: const <Widget>[Icon(Icons.fitness_center), Icon(Icons.search)],
+      index: 0,
+      height: 50,
+      color: Colors.white.withOpacity(0.5),
+      backgroundColor: Colors.white30,
+      buttonBackgroundColor: Colors.white.withOpacity(0.5),
+      animationCurve: Curves.easeInOut,
+      animationDuration: Duration(microseconds: 500),
+      onTap: (int index) {
+        setState(() => sectionIndex = index);
+      },
+    );
     return Container(
       child: SafeArea(
         child: Scaffold(
@@ -36,22 +49,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: sectionIndex == 0 ? ActiveWorkouts() : WorkoutsLists(),
-          bottomNavigationBar: CurvedNavigationBar(
-            items: const <Widget>[
-              Icon(Icons.fitness_center),
-              Icon(Icons.search)
-            ],
-            index: 0,
-            height: 50,
-            color: Colors.white.withOpacity(0.5),
-            backgroundColor: Colors.green,
-            buttonBackgroundColor: Colors.white.withOpacity(0.5),
-            animationCurve: Curves.easeInOut,
-            animationDuration: Duration(microseconds: 1000),
-            onTap: (int index) {
-              setState(() => sectionIndex = index);
-            },
-          ),
+          bottomNavigationBar: navigationBar,
         ),
       ),
     );
