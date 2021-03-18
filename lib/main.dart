@@ -23,4 +23,4 @@ class MaxfitApp extends StatelessWidget {
     );
   }
 }
-//}
+
